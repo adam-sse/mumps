@@ -6,14 +6,19 @@ import androidx.lifecycle.ViewModel;
 
 public class CourseListViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<String> myCoursesText;
+    private final MutableLiveData<String> allCoursesText;
 
     public CourseListViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is courseList fragment");
+        myCoursesText = new MutableLiveData<>();
+        allCoursesText = new MutableLiveData<>();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getMyCoursesText() {
+        return myCoursesText;
+    }
+
+    public LiveData<String> getAllCoursesText() {
+        return allCoursesText;
     }
 }

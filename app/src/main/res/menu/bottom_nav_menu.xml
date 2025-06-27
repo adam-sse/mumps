@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_courseList"
         android:icon="@drawable/ic_courselist_black_24dp"
-        android:title="@string/title_courseList" />
+        android:title="@string/courseList_title" />
 
     <item
         android:id="@+id/navigation_leaderBoard"

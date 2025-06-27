@@ -24,8 +24,10 @@ public class CourseListFragment extends Fragment {
         binding = FragmentCourselistBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textCourseList;
-        courseListViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textMyCoursesView = binding.textMyCourses;
+        final TextView textAllCoursesView = binding.textAllCourses;
+        courseListViewModel.getMyCoursesText().observe(getViewLifecycleOwner(), textMyCoursesView::setText);
+        courseListViewModel.getAllCoursesText().observe(getViewLifecycleOwner(), textAllCoursesView::setText);
         return root;
     }
 

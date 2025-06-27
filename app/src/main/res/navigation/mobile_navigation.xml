@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_courseList"
         android:name="de.uni_hildesheim.mump.ui.courseList.CourseListFragment"
-        android:label="@string/title_courseList"
+        android:label="@string/courseList_title"
         tools:layout="@layout/fragment_courselist" />
 
     <fragment
