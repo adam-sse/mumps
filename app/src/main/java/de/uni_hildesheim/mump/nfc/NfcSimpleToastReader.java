@@ -30,8 +30,10 @@ public class NfcSimpleToastReader implements IntentHandler  {
                 String tagIdHex = sb.toString();
 
                 Log.d("NFC", "Tag ID: " + tagIdHex);
-                Toast.makeText(this, "Tag ID: " + tagIdHex, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Tag ID: " + tagIdHex, Toast.LENGTH_SHORT).show();
+                return true;
             }
         }
+        return false;
     }
 }
