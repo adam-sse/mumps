@@ -50,10 +50,10 @@ public class Api {
 
     public List<UserDto> getAllUsers() throws IOException {
         return List.of(
-                new UserDto("adam", "a@dam", false, 1252, Set.of()),
-                new UserDto("marcel", "a@dam", false, 235, Set.of()),
-                new UserDto("michael", "a@dam", false, 2342, Set.of()),
-                new UserDto("ani", "a@dam", false, 3534, Set.of())
+                new UserDto("adam", "a@dam", 1252, List.of()),
+                new UserDto("marcel", "a@dam", 235, List.of()),
+                new UserDto("michael", "a@dam", 2342, List.of()),
+                new UserDto("ani", "a@dam", 3534, List.of())
         );
     }
 
