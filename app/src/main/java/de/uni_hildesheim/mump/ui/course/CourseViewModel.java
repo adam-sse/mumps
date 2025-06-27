@@ -1,16 +1,16 @@
-package de.uni_hildesheim.mump.ui.home;
+package de.uni_hildesheim.mump.ui.course;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class CourseViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public CourseViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("Scan for course");
     }
 
     public LiveData<String> getText() {
