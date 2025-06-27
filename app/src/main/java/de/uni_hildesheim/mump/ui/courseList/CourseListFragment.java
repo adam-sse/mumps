@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 import de.uni_hildesheim.mump.R;
 import de.uni_hildesheim.mump.api.Api;
 import de.uni_hildesheim.mump.databinding.FragmentCourselistBinding;
+import de.uni_hildesheim.mump.ui.course.*;
 
 public class CourseListFragment extends Fragment {
 
@@ -42,8 +44,22 @@ public class CourseListFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerView_MyCourses);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new TextAdapter(new ArrayList<>());
+        adapter = new TextAdapter(new ArrayList<>(), courseName -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("courseName", courseName); // Pass course name
+
+            CourseFragment courseFragment = new CourseFragment();
+            courseFragment.setArguments(bundle);
+//@TODO potentiell falsch!!!!!!
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment_activity_main, courseFragment) // update container ID if needed
+                    .addToBackStack(null)
+                    .commit();
+        });
+
         recyclerView.setAdapter(adapter);
+
 
         Executors.newSingleThreadExecutor().execute(() -> {
             // Add dynamic items

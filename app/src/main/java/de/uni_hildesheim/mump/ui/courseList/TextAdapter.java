@@ -14,9 +14,15 @@ import de.uni_hildesheim.mump.R;
 public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder> {
 
     private final List<String> items;
+    private final OnItemClickListener listener;
 
-    public TextAdapter(List<String> items) {
+    public interface OnItemClickListener {
+        void onItemClick(String courseName);
+    }
+
+    public TextAdapter(List<String> items, OnItemClickListener listener) {
         this.items = items;
+        this.listener = listener;
     }
 
     public static class TextViewHolder extends RecyclerView.ViewHolder {
@@ -25,6 +31,11 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         public TextViewHolder(View itemView) {
             super(itemView);
             textItem = itemView.findViewById(R.id.textItem);
+        }
+
+        public void bind(String item, OnItemClickListener listener) {
+            textItem.setText(item);
+            itemView.setOnClickListener(v -> listener.onItemClick(item));
         }
     }
 
@@ -37,7 +48,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
 
     @Override
     public void onBindViewHolder(TextViewHolder holder, int position) {
-        holder.textItem.setText(items.get(position));
+        holder.bind(items.get(position), listener);
     }
 
     @Override

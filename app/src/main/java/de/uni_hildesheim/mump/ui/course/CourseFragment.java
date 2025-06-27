@@ -25,7 +25,13 @@ public class CourseFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textCourse;
-        courseViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        //courseViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        // Get argument
+        Bundle args = getArguments();
+        if (args != null) {
+            String courseName = args.getString("courseName");
+            textView.setText("Course selected: " + courseName);
+        }
         return root;
     }
 
