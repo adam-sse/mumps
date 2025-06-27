@@ -37,10 +37,15 @@ public class NfcTextTagHandler  implements IntentHandler {
 
         try {
             ndef.connect();
-            NdefMessage message = createTextMessage("Hallo Chain-of-Responsibility!");
-            ndef.writeNdefMessage(message);
+
+            String message = new String(ndef.getNdefMessage().getRecords()[0].getPayload());
+            Toast.makeText(context, "Text auf Tag: " + message, Toast.LENGTH_SHORT).show();
+
+            //NdefMessage message = createTextMessage("/course/1/event/2");
+            //ndef.writeNdefMessage(message);
+            //Toast.makeText(context, "Text auf Tag geschrieben.", Toast.LENGTH_SHORT).show();
+
             ndef.close();
-            Toast.makeText(context, "Text auf Tag geschrieben.", Toast.LENGTH_SHORT).show();
             return true;
         } catch (Exception e) {
             Toast.makeText(context, "Fehler beim Schreiben: " + e.getMessage(), Toast.LENGTH_SHORT).show();
