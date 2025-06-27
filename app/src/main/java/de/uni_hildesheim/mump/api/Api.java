@@ -33,6 +33,8 @@ public class Api {
             .create();
 
     private static final Type COURSE_LIST = new TypeToken<List<CourseDto>>() {}.getType();
+    private static final Type USER_LIST = new TypeToken<List<UserDto>>() {}.getType();
+
 
     private String baseUrl;
 
@@ -48,13 +50,8 @@ public class Api {
         return get("/course/" + id, CourseDto.class);
     }
 
-    public List<UserDto> getAllUsers() throws IOException {
-        return List.of(
-                new UserDto("adam", "a@dam", 1252, List.of()),
-                new UserDto("marcel", "a@dam", 235, List.of()),
-                new UserDto("michael", "a@dam", 2342, List.of()),
-                new UserDto("ani", "a@dam", 3534, List.of())
-        );
+    public List<UserDto> getLeaderboard() throws IOException {
+        return get("/users/leaderboard", USER_LIST);
     }
 
     private <T> T get(String endpoint, Type resultType) throws IOException {
