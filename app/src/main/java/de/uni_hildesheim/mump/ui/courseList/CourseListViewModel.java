@@ -6,19 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class CourseListViewModel extends ViewModel {
 
-    private final MutableLiveData<String> myCoursesText;
-    private final MutableLiveData<String> allCoursesText;
-
     public CourseListViewModel() {
-        myCoursesText = new MutableLiveData<>();
-        allCoursesText = new MutableLiveData<>();
     }
 
-    public LiveData<String> getMyCoursesText() {
-        return myCoursesText;
-    }
-
-    public LiveData<String> getAllCoursesText() {
-        return allCoursesText;
-    }
 }
