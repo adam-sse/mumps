@@ -12,9 +12,15 @@
         tools:layout="@layout/fragment_course" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="de.uni_hildesheim.mump.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_courseList"
+        android:name="de.uni_hildesheim.mump.ui.courseList.CourseListFragment"
+        android:label="@string/title_courseList"
+        tools:layout="@layout/fragment_courselist" />
+
+    <fragment
+        android:id="@+id/navigation_leaderBoard"
+        android:name="de.uni_hildesheim.mump.ui.leaderBoard.LeaderBoardFragment"
+        android:label="@string/title_leaderBoard"
+        tools:layout="@layout/fragment_leaderboard" />
 
 </navigation>
