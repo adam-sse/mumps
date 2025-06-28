@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -18,13 +18,23 @@ import java.util.concurrent.Executors;
 
 import de.uni_hildesheim.mump.api.Api;
 import de.uni_hildesheim.mump.databinding.FragmentLeaderboardBinding;
-import de.uni_hildesheim.mump.dto.UserDto;
+import de.uni_hildesheim.mump.help_classes.UserViewModel;
 
 public class LeaderBoardFragment extends Fragment {
 
     private FragmentLeaderboardBinding binding;
+    private UserViewModel userViewModel;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+    }
     private LeaderBoardAdapter adapter;
 
+        public View onCreateView(@NonNull LayoutInflater inflater,
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,

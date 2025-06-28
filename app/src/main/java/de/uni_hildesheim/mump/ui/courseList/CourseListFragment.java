@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,7 +22,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,13 +34,23 @@ import java.util.stream.Collectors;
 import de.uni_hildesheim.mump.R;
 import de.uni_hildesheim.mump.api.Api;
 import de.uni_hildesheim.mump.databinding.FragmentCourselistBinding;
+import de.uni_hildesheim.mump.help_classes.CourseInfo;
+import de.uni_hildesheim.mump.ui.courseList.CourseInfoAdapter; // Or your actual package
 
 public class CourseListFragment extends Fragment implements CourseInfoAdapter.OnItemClickListener {
 
+    private UserViewModel userViewModel;
     private FragmentCourselistBinding binding;
     private RecyclerView recyclerView;
     private CourseInfoAdapter adapter;
     private ExecutorService executorService;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,7 +64,6 @@ public class CourseListFragment extends Fragment implements CourseInfoAdapter.On
 
         adapter = new CourseInfoAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
-
 
         Executors.newSingleThreadExecutor().execute(() -> {
             // Add dynamic items
@@ -79,7 +88,7 @@ public class CourseListFragment extends Fragment implements CourseInfoAdapter.On
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myButton.setText("Button wurde geklickt!");;
+                myButton.setText(userViewModel.getUserName().getValue());;
             }
         });
 

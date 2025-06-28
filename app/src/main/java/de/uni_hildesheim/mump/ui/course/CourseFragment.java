@@ -12,10 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import de.uni_hildesheim.mump.databinding.FragmentCourseBinding;
+import de.uni_hildesheim.mump.help_classes.UserViewModel;
 
 public class CourseFragment extends Fragment {
 
     private FragmentCourseBinding binding;
+    private UserViewModel userViewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
