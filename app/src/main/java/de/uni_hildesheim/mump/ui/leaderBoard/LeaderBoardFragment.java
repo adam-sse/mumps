@@ -9,7 +9,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.util.concurrent.Executors;
 
 import de.uni_hildesheim.mump.api.Api;
 import de.uni_hildesheim.mump.databinding.FragmentLeaderboardBinding;
+import de.uni_hildesheim.mump.dto.UserDto;
 import de.uni_hildesheim.mump.help_classes.UserViewModel;
 
 public class LeaderBoardFragment extends Fragment {
@@ -34,7 +37,6 @@ public class LeaderBoardFragment extends Fragment {
     }
     private LeaderBoardAdapter adapter;
 
-        public View onCreateView(@NonNull LayoutInflater inflater,
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,

@@ -36,6 +36,7 @@ import de.uni_hildesheim.mump.R;
 import de.uni_hildesheim.mump.api.Api;
 import de.uni_hildesheim.mump.databinding.FragmentCourselistBinding;
 import de.uni_hildesheim.mump.help_classes.CourseInfo;
+import de.uni_hildesheim.mump.help_classes.UserViewModel;
 import de.uni_hildesheim.mump.ui.courseList.CourseInfoAdapter; // Or your actual package
 
 public class CourseListFragment extends Fragment implements CourseInfoAdapter.OnItemClickListener {
