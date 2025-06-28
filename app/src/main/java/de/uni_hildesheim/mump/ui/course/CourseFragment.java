@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,14 +25,14 @@ public class CourseFragment extends Fragment {
         binding = FragmentCourseBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textCourse;
-        //courseViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        // Get argument
-        Bundle args = getArguments();
-        if (args != null) {
-            String courseName = args.getString("courseName");
-            textView.setText("Course selected: " + courseName);
-        }
+        String courseName = getArguments().getString("course_name");
+        int points = getArguments().getInt("points");
+
+        TextView textView_name = binding.textViewCourseName;
+        TextView textView_score = binding.textViewCoursePoints;
+
+
+
         return root;
     }
 

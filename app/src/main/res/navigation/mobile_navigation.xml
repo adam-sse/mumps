@@ -3,19 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_course">
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="de.uni_hildesheim.mump.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home"/>
+
 
     <fragment
         android:id="@+id/navigation_course"
         android:name="de.uni_hildesheim.mump.ui.course.CourseFragment"
         android:label="@string/title_course"
-        tools:layout="@layout/fragment_course" />
+        tools:layout="@layout/fragment_course" >
+        <argument
+            android:name="course_name"
+            app:argType="string" />
+        <argument
+            android:name="points"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_courseList"
         android:name="de.uni_hildesheim.mump.ui.courseList.CourseListFragment"
         android:label="@string/courseList_title"
         tools:layout="@layout/fragment_courselist" />
+    <action
+        android:id="@+id/action_courseList_to_course"
+        app:destination="@id/navigation_course" />
 
     <fragment
         android:id="@+id/navigation_leaderBoard"

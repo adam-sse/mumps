@@ -3,8 +3,10 @@ package de.uni_hildesheim.mump.ui.courseList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -39,10 +41,11 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         }
     }
 
+    @NonNull
     @Override
-    public TextViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TextViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_text, parent, false);
+                .inflate(R.layout.item_text, parent, false); // Ensure item_text.xml is your layout for a single item
         return new TextViewHolder(view);
     }
 
@@ -57,8 +60,32 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
     }
 
     public void addItems(List<String> newItems) {
-        int startIndex = items.size();
+        int startIndex = items.size(); // Get current size before adding
         items.addAll(newItems);
         notifyItemRangeInserted(startIndex, newItems.size());
+    }
+
+
+    public static class TextViewHolder extends RecyclerView.ViewHolder {
+        TextView textItem;
+
+        public TextViewHolder(View itemView) {
+            super(itemView);
+            textItem = itemView.findViewById(R.id.textItem);
+        }
+
+        public void bind(final String itemData, final OnItemClickListener clickListener) { // itemData is the specific String
+            textItem.setText(itemData);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (clickListener != null) {
+                        // Use the 'itemData' that was passed to bind,
+                        // which is the correct data for this ViewHolder.
+                        clickListener.onItemClick(itemData);
+                    }
+                }
+            });
+        }
     }
 }

@@ -5,4 +5,5 @@
     <string name="courseList_myCourses">My Courses</string>
     <string name="courseList_allCourses">All Courses</string>
     <string name="title_leaderBoard">Leaderboard</string>
+    <string name="title_home">Home</string>
 </resources>

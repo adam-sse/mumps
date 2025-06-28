@@ -7,11 +7,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.NavController;
+
+
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,19 +27,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import de.uni_hildesheim.mump.R;
 import de.uni_hildesheim.mump.api.Api;
 import de.uni_hildesheim.mump.databinding.FragmentCourselistBinding;
-import de.uni_hildesheim.mump.ui.course.*;
 
-public class CourseListFragment extends Fragment {
+public class CourseListFragment extends Fragment implements CourseInfoAdapter.OnItemClickListener {
 
     private FragmentCourselistBinding binding;
     private RecyclerView recyclerView;
-    private TextAdapter adapter;
+    private CourseInfoAdapter adapter;
+    private ExecutorService executorService;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,41 +52,55 @@ public class CourseListFragment extends Fragment {
         recyclerView = root.findViewById(R.id.recyclerView_MyCourses);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new TextAdapter(new ArrayList<>(), courseName -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("courseName", courseName); // Pass course name
-
-            CourseFragment courseFragment = new CourseFragment();
-            courseFragment.setArguments(bundle);
-//@TODO potentiell falsch!!!!!!
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.nav_host_fragment_activity_main, courseFragment) // update container ID if needed
-                    .addToBackStack(null)
-                    .commit();
-        });
-
+        adapter = new CourseInfoAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
 
 
         Executors.newSingleThreadExecutor().execute(() -> {
             // Add dynamic items
             try {
-                List<String> courseNames = Api.INSTANCE.getAllCourses().stream()
-                        .map(course -> course.name())
+                List<CourseInfo> courseDetailsList = Api.INSTANCE.getAllCourses().stream()
+                        .map(apiCourse -> new CourseInfo(
+                                apiCourse.name(),// Get the owner
+                                apiCourse.rewardPerEvent()   // Get the points
+                        ))
                         .collect(Collectors.toList());
                 getActivity().runOnUiThread(() -> {
-                    adapter.addItems(courseNames);
+                    adapter.addItems(courseDetailsList);
                 });
             } catch (IOException e) {
-                getActivity().runOnUiThread(() -> {
-                    adapter.addItems(List.of("IOException: " + e.getMessage()));
-                });
+                Toast.makeText(getContext(), "Error loading courses. Please check connection.", Toast.LENGTH_LONG).show();
             }
         });
 
+        Button myButton = binding.button1;
+
+        // Setze einen OnClickListener für den Button
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myButton.setText("Button wurde geklickt!");;
+            }
+        });
+
+
         return root;
     }
+
+    @Override
+    public void onItemClick(CourseInfo item) {
+
+        Button myButton = binding.button1;
+
+        NavController navController = Navigation.findNavController(requireView()); // requireView() ist sicherer hier
+        Bundle bundle = new Bundle();
+        bundle.putString("course_name", item.getName());
+        bundle.putInt("points", item.getPoints());
+        navController.navigate(R.id.action_courseList_to_course, bundle);
+
+        myButton.setText(String.valueOf(item.getPoints()));
+    }
+
 
     @Override
     public void onDestroyView() {
