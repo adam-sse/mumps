@@ -50,6 +50,9 @@ public class Api {
         return get("/course/" + id, CourseDto.class);
     }
 
+    public List<UserDto> getAllUsers() throws IOException {
+        return get("/users", USER_LIST);
+    }
     public List<UserDto> getLeaderboard() throws IOException {
         return get("/users/leaderboard", USER_LIST);
     }
