@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import de.uni_hildesheim.mump.api.Api;
@@ -59,28 +60,35 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!userViewModel.isLoggedIn()) {
-                    Editable editableName = binding.input1.getText(); // input1 is your TextInputEditText via binding
-                    String name = "";
-                    if (editableName != null) {
-                        name = editableName.toString().trim(); // Convert Editable to String and trim whitespace
-                    }
-
-                    boolean exists = false;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        try {
-                            List<String> userIds = Api.INSTANCE.getAllUsers().stream().map(apiuser ->
-                                    apiuser.userID()).collect(Collectors.toList());
-                            exists = userIds.contains(name);
-                            System.out.println(userIds);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                    Executors.newSingleThreadExecutor().execute(() -> {
+                        Editable editableName = binding.input1.getText(); // input1 is your TextInputEditText via binding
+                        String name = "";
+                        if (editableName != null) {
+                            name = editableName.toString().trim(); // Convert Editable to String and trim whitespace
                         }
-                    }
-                    if (!name.isEmpty() && exists ) {
-                        // Now you have the name string, you can use it
-                        userViewModel.setUserName(name);
-                        myButton.setText("Logout");
-                        ;}
+
+                        boolean exists = false;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            try {
+                                List<String> userIds = Api.INSTANCE.getAllUsers().stream().map(apiuser ->
+                                        apiuser.userID()).collect(Collectors.toList());
+                                exists = userIds.contains(name);
+                                System.out.println(userIds);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        if (!name.isEmpty() && exists ) {
+                            String fName = name;
+                            getActivity().runOnUiThread(() -> {
+                                // Now you have the name string, you can use it
+                                userViewModel.setUserName(fName);
+                                myButton.setText("Logout");
+                            });
+                        }
+
+
+                    });
                 } else {
                         myButton.setText("Login");
                         userViewModel.setUserName("");
