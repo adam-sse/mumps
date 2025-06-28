@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class CourseListFragment extends Fragment implements CourseInfoAdapter.On
 
         adapter = new CourseInfoAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
+        System.out.println("printed that fukking statement");  // <-- Add this
 
         Executors.newSingleThreadExecutor().execute(() -> {
             // Add dynamic items
@@ -74,32 +76,21 @@ public class CourseListFragment extends Fragment implements CourseInfoAdapter.On
                                 apiCourse.rewardPerEvent()   // Get the points
                         ))
                         .collect(Collectors.toList());
+                System.out.println("hha that fukking statement");
                 getActivity().runOnUiThread(() -> {
                     adapter.addItems(courseDetailsList);
                 });
             } catch (IOException e) {
-                Toast.makeText(getContext(), "Error loading courses. Please check connection.", Toast.LENGTH_LONG).show();
+                ;
             }
         });
-
-        Button myButton = binding.button1;
-
-        // Setze einen OnClickListener für den Button
-        myButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myButton.setText(userViewModel.getUserName().getValue());;
-            }
-        });
-
 
         return root;
     }
 
     @Override
     public void onItemClick(CourseInfo item) {
-
-        Button myButton = binding.button1;
+        System.out.println("printed that fukking statement");  // <-- Add this
 
         NavController navController = Navigation.findNavController(requireView()); // requireView() ist sicherer hier
         Bundle bundle = new Bundle();
@@ -107,7 +98,6 @@ public class CourseListFragment extends Fragment implements CourseInfoAdapter.On
         bundle.putInt("points", item.getPoints());
         navController.navigate(R.id.action_courseList_to_course, bundle);
 
-        myButton.setText(String.valueOf(item.getPoints()));
     }
 
 

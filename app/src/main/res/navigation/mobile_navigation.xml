@@ -32,7 +32,9 @@
         tools:layout="@layout/fragment_courselist" />
     <action
         android:id="@+id/action_courseList_to_course"
-        app:destination="@id/navigation_course" />
+        app:destination="@id/navigation_course"
+        app:popUpTo="@id/navigation_courseList"
+        app:popUpToInclusive="false"/>
 
     <fragment
         android:id="@+id/navigation_leaderBoard"

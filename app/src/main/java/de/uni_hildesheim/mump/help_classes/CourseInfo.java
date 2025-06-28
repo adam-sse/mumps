@@ -2,8 +2,8 @@ package de.uni_hildesheim.mump.help_classes;
 
 
 public class CourseInfo {
-    private final String name;
-    private final int points; // Or String if points can be non-numeric
+    private String name;
+    private int points; // Or String if points can be non-numeric
 
     public CourseInfo(String name, int points) {
         this.name = name;
